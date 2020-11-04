@@ -1,0 +1,68 @@
+"""
+Definiciones de los tipos de raiz
+"""
+
+type Query{
+    "Lista de usuarios registrados en la base de datos (clientes/admins)"
+    users(
+        "Pagina seleccionada para acceder a ella"
+        page: Int = 1,
+        "Usuarios que se obtendran por cada pagina"
+        itemsPage: Int = 20,
+        "Especificar el estado del usuario que queremos mostrar"
+        active: ActiveFilterEnum = ACTIVE): ResultUsers
+           "Lista de usuarios registrados en la base de datos (clientes/admins)"
+    cotizaciones(
+        "Pagina seleccionada para acceder a ella"
+        page: Int = 1,
+        "cotizaciones que se obtendran por cada pagina"
+        itemsPage: Int = 20,
+        "Especificar el estado del cotizaciones que queremos mostrar"
+        active: ActiveFilterEnum = ACTIVE,
+        "id de quien hace la peticion"
+        id: ID): ResultCotizaciones
+           "Lista de cotizaciones registrados en la base de datos (clientes/admins)"
+    prealertas(
+        "Pagina seleccionada para acceder a ella"
+        page: Int = 1,
+        "prealertas que se obtendran por cada pagina"
+        itemsPage: Int = 20,
+        "Especificar el estado de la prealertas que queremos mostrar"
+        active: ActiveFilterEnum = ACTIVE,
+        "id de quien hace la peticion"
+        id: ID): ResultPrealertas
+           "Lista de envios registrados en la base de datos (clientes/admins)"
+    envios(
+        "Pagina seleccionada para acceder a ella"
+        page: Int = 1,
+        "Envios que se obtendran por cada pagina"
+        itemsPage: Int = 20,
+        "Especificar el estado del envio que queremos mostrar"
+        active: ActiveFilterEnum = ACTIVE,
+        "id de quien hace la peticion"
+        id: ID): ResultEnvios
+    "Para iniciar sesion de usuario"
+    login(
+        "Cooreo electronico del usuario con el que nos vamos a logear"
+        email: String!,
+        "Contraseña que necesitamos para autenticarnos e iniciar sesion"
+        password: String!) : ResultLogin
+    "autenticarnos mediante token"
+    me: ResultUser
+    "Lista de generos en la base de datos"
+    genres (
+        "pagina seleccionada para acceder a ella"
+        page: Int = 1,
+        "Genero que se obtemdran por cada pagina" 
+        itemsPage: Int = 20): ResultGenre
+    "Buscar genero por id"
+    genre(id: ID!): ResultGenre
+        "Lista de etiquetas (tags)"
+    tags (
+        "Pagina seleccionada para acceder a ella"
+        page: Int = 1, 
+        "tags que se obtemdra por cada pagina"
+        itemsPage: Int = 20): ResultTag
+    "Item del género seleccionado"
+    tag(id: ID!): ResultTag
+}

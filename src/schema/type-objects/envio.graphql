@@ -1,0 +1,75 @@
+"Input para añadir los datos de la cotizacion en el dashboard "
+type Envio{
+    "identificador en este caso no obligatorio"
+    id: ID!
+    "identificador casillero cotizacion"
+    idCotizacion: String
+      "identificador casillero prealerta"
+    idprealerta: String
+    "identificador casillero envio"
+    idEnvio: String
+     "peso en libra "
+    peso: String
+    "cantidad unitaria"
+    cantidad: String
+    "precio en dolar"
+    precio: String!
+    "tipo articulo"
+    tipoProducto:String!
+    "compramos por ti?"
+    compra: Boolean!
+    "quien cotiza?"
+    usuarioCotiza: String!
+    "servicio"
+    servicio: String!
+    "seguro"
+    seguro: Boolean!
+    "fecha de creacion"
+    creationDate: String!
+    "total calculadora dolares"
+    totalDOL: String!
+    "total pesos colombianos"
+    totalCOl: String!
+    "flete"
+    flete: String!
+    "impuesto"
+    impuesto: String!
+    "url del producto"
+    url: String!
+    "trm del dia"
+    trm: String!
+    "objeto usuario creo la cotizacion"
+    quienCotiza: User!
+    "objeto usuario creo la cotizacion"
+    quienEnvia: User!
+    "descripcion"
+    descripcion: String!
+      "activo o no activo"
+    active: Boolean
+    "tienda de compra"
+    tienda: String!
+    "Empresa de envio"
+    shipping: String!
+    "numero de orden"
+    oderNumber: String!
+    "numero de tracking"
+    tracking: String!
+    "pdf o img factura"
+    factura: String!
+    "cantidad de articulos"
+    productQty: String!
+    "Estado para cambiar a ser envios"
+    state: Boolean!
+    "direccion de envio"
+    direccion: String!
+    "condicion de pago"
+    pago: String!
+    "casillero"
+    casillero: String!
+    "Envio nacional"
+    nacional: String!
+    "Estado del traking"
+    pakkiTracking: String!
+
+    
+}

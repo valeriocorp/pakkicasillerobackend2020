@@ -1,0 +1,7 @@
+
+"Tipo de usuarios disponibles"
+enum Role {
+    CLIENT
+    ADMIN
+    COMERCIAL
+}

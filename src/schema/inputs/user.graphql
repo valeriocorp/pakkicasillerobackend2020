@@ -1,0 +1,23 @@
+"Input para añadir los datos del usuario en el registro "
+input UserInput {
+    "identificador en este caso no obligatorio"
+    id: ID
+     "nombres del usuario"
+    name: String!
+    "apellidos del usuario"
+    lastname: String!
+    "correo del usuario"
+    email: String!
+    "contraseña del usuario"
+    password:String
+    "permisos de usuarios"
+    role: Role = CLIENT
+    "Activo o no activo"
+    active: Boolean
+    "Telefono del usuario"
+    phone: String!
+    "id del casillero"
+    idCaseillero: String
+    "aliado al que pertenece"
+    aliado: ID
+}

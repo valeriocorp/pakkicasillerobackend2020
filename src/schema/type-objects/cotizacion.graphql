@@ -1,0 +1,46 @@
+"Input para añadir los datos de la cotizacion en el dashboard "
+type Cotizacion{
+    "identificador en este caso no obligatorio"
+    id: ID!
+    "identificador casillero"
+    idCotizacion: String
+     "peso en libra "
+    peso: String
+    "cantidad unitaria"
+    cantidad: String
+    "precio en dolar"
+    precio: String!
+    "tipo articulo"
+    tipoProducto:String!
+    "compramos por ti?"
+    compra: Boolean!
+    "quien cotiza?"
+    usuarioCotiza: String!
+    "servicio"
+    servicio: String!
+    "seguro"
+    seguro: Boolean!
+    "fecha de creacion"
+    creationDate: String!
+    "total calculadora dolares"
+    totalDOL: String!
+    "total pesos colombianos"
+    totalCOl: String!
+    "flete"
+    flete: String!
+    "impuesto"
+    impuesto: String!
+    "url del producto"
+    url: String!
+    "trm del dia"
+    trm: String!
+    "objeto usuario creo la cotizacion"
+    quienCotiza: User!
+    "descripcion"
+    descripcion: String!
+      "activo o no activo"
+    active: Boolean
+
+    
+}
+

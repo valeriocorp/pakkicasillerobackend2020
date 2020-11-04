@@ -1,0 +1,12 @@
+type ResultGenre implements Result{
+    "informacion del sistema de paginacion"
+    info: ResultInfo
+    "Estado de la operacion"
+    status: Boolean!
+    "Mensaje de la operacion para dar feedback"
+    message: String!
+    ""
+    genre: Genre
+    ""    
+    genres: [Genre!]
+}

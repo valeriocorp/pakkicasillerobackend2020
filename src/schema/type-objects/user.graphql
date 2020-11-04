@@ -1,0 +1,41 @@
+"""
+Vamos a especificar la informacion detallada del usuario.
+* vamos a tener en cuenta : 
+email = usuario del cliente de la base de datos
+fecha de nacimiento y de registro en formato ISO
+"""
+type User{
+    "identificador unico"
+    id: ID!
+    "nombres del usuario"
+    name: String!
+    "apellidos del usuario"
+    lastname: String!
+    "correo del usuario"
+    email: String!
+    "contraseña del usuario"
+    password:String!
+    "fecha en la que se creo el usuario"
+    registerDate:String!
+    "fecha de nacimiento del usuario"
+    birthday:String
+    "permisos de usuarios"
+    role: Role!
+    "activo o no activo"
+    active: Boolean
+    "Telefono del usuario"
+    phone: String!
+    "tipo documento del usuario"
+    documentType: String
+    "numero de documento de identificacion"
+    documentNumber: String
+    "Direccion del cliente"
+    direction: String
+    "id del casillero"
+    idCaseillero: String
+    "aliado al que pertenece"
+    aliado: ID
+    "quien"
+    quien: User
+
+}
