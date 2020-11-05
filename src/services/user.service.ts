@@ -141,7 +141,7 @@ class UsersService extends ResolversOperationsService{
             user!.idCaseillero = 'PAKKICO' + new Date().getFullYear().toString() + consecutivo;
             //asociacion de un aliado
             if (user?.aliado === null || user?.aliado === undefined || user?.aliado === '') {
-                user!.aliado = '2';
+                user!.aliado = '5';
             }
                   //buscar quien hizo la cotizacion
                   const filter = {id: user?.aliado};
