@@ -1,19 +1,14 @@
 import dotenv from 'dotenv';
-
-const environments = dotenv.config(
+const environment = dotenv.config(
     {
         path: './src/.env'
     }
 );
 
 if (process.env.NODE_ENV !== 'production') {
-    if (environments.error) {
-        throw environments.error;
-        
-        
+    if (environment.error) {
+        throw environment.error;
     }
 }
 
-
-
-export default environments;
+export default environment;

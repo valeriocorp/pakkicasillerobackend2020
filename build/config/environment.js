@@ -4,12 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
-const environments = dotenv_1.default.config({
+const environment = dotenv_1.default.config({
     path: './src/.env'
 });
 if (process.env.NODE_ENV !== 'production') {
-    if (environments.error) {
-        throw environments.error;
+    if (environment.error) {
+        throw environment.error;
     }
 }
-exports.default = environments;
+exports.default = environment;

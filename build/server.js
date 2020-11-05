@@ -29,13 +29,14 @@ if (process.env.NODE_ENV !== 'production') {
 function init() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = express_1.default();
+        const pubsub = new apollo_server_express_1.PubSub();
         app.use('*', cors_1.default());
         app.use(compression_1.default());
         const database = new database_1.default();
         const db = yield database.init();
         const context = ({ req, connection }) => __awaiter(this, void 0, void 0, function* () {
             const token = (req) ? req.headers.authorization : connection.authorization;
-            return { db, token };
+            return { db, token, pubsub };
         });
         const server = new apollo_server_express_1.ApolloServer({
             schema: schema_1.default,
@@ -47,6 +48,7 @@ function init() {
             endpoint: '/graphql'
         }));
         const httpServer = http_1.createServer(app);
+        server.installSubscriptionHandlers(httpServer);
         const PORT = process.env.PORT || 2004;
         httpServer.listen({
             port: PORT
