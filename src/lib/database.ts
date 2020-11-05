@@ -3,7 +3,7 @@ import chalk from 'chalk';
 class Database {
 
     async init() {
-        const MONGO_DV = process.env.DATABASE || 'mongodb+srv://Fvalerio103526:Fvalerio103526@pruebas.olkkf.mongodb.net/casillero?retryWrites=true&w=majority';
+        const MONGO_DV = process.env.DATABASE || 'mongodb://127.0.0.1:27017/online-shop';
 
         const client = await MongoClient.connect(
            MONGO_DV,
