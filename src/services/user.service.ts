@@ -147,7 +147,17 @@ class UsersService extends ResolversOperationsService{
                   const filter = {id: user?.aliado};
                   const quien = await this.who(COLLECTIONS.USERS,filter);
                      user!.quien = quien; 
+            const email = user!.email;          
             const result = await this.add(this.collection, user || {}, 'usuario');
+            const html = `Hola Bienvenido a tu casillero virtual Pakki para acceder a tu cuenta usa tu correo ${user!.email}
+             y la contraseña que le diste a la misma. `;
+            const mail = {
+                subject: 'Bienvenido a tu casillero virtual',
+                to: email,
+                html
+            };
+            //Envia correo al usuario de bienvenida
+            new MailService().send(mail)
             //Guardar el documento registro en la coleccion
             return {
                 status: result.status,
