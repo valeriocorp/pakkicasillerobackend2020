@@ -6,13 +6,14 @@ const environments = dotenv.config(
     }
 );
 
-if (process.env.NODE_ENV !== 'prodction') {
+if (process.env.NODE_ENV !== 'production') {
     if (environments.error) {
         throw environments.error;
         
         
     }
 }
+
 
 
 export default environments;
