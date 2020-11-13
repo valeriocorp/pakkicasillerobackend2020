@@ -5,6 +5,7 @@ import slugify from 'slugify';
 const trmcol = require('trmcol');
 import ResolversOperationsService from './resolvers-operations.services';
 class EnvioService extends ResolversOperationsService {
+    //TODO:agregar al objeto envio condicion pago.
     trmdia:string = '';
     collection = COLLECTIONS.ENVIO;
     constructor(root: object, variables: object, context: IContextData) {
@@ -36,15 +37,15 @@ class EnvioService extends ResolversOperationsService {
         if (quien.role === 'COMERCIAL') {
             const idcasillero = quien.idCaseillero;
             console.log(idcasillero);
-            let filter: object = {'quienEnvia.idCaseillero': idcasillero,active: {$ne: false}};
-            let filterAliado: object =  { 'quienEnvia.quien.idCaseillero': idcasillero ,active: {$ne: false}};
+            let filter: object = {'quienID': idcasillero,active: {$ne: false}};
+            let filterAliado: object =  { 'quienIDAliado': idcasillero ,active: {$ne: false}};
          if (active === ACTIVE_VALUES_FILTER.ALL) {
-                filter = {'quienEnvia.idCaseillero': idcasillero};
-             filterAliado =  { 'quienEnvia.quien.idCaseillero': idcasillero };
+                filter = {'quienID': idcasillero};
+             filterAliado =  { 'quienIDAliado': idcasillero };
             } else if(active === ACTIVE_VALUES_FILTER.INACTIVE) {
               
-                 filter = {'quienEnvia.idCaseillero': idcasillero, active: {$eq: false}};
-                filterAliado =  { 'quienEnvia.quien.idCaseillero': idcasillero ,active: {$eq: false}};
+                 filter = {'quienID': idcasillero, active: {$eq: false}};
+                filterAliado =  { 'quienIDAliado': idcasillero ,active: {$eq: false}};
             }
             const page = this.getVariables().pagination?.page;
             const itemsPage = this.getVariables().pagination?.itemsPage;
@@ -66,12 +67,12 @@ class EnvioService extends ResolversOperationsService {
         if (quien.role === 'CLIENT') {
             console.log('Es un cliente')
             const idcasillero = quien.idCaseillero;
-            console.log(idcasillero);
-            let filter: object = {'quienEnvia.idCaseillero': idcasillero, active: {$ne: false}};
+            console.log('su casillero' + idcasillero);
+            let filter: object = {'quienID': idcasillero, active: {$ne: false}};
             if (active === ACTIVE_VALUES_FILTER.ALL) {
-                filter = {'quienEnvia.idCaseillero': idcasillero,};
+                filter = {'quienID': idcasillero,};
             } else if(active === ACTIVE_VALUES_FILTER.INACTIVE) {
-                filter = {'quienEnvia.idCaseillero': idcasillero,active: {$eq: false}};
+                filter = {'quienID': idcasillero,active: {$eq: false}};
             }
             const page = this.getVariables().pagination?.page;
             const itemsPage = this.getVariables().pagination?.itemsPage;
@@ -133,7 +134,11 @@ class EnvioService extends ResolversOperationsService {
              //buscar quien hizo la envio
              const filter = {id: envio?.idprealerta};
              const quien = await this.who(COLLECTIONS.USERS,filter);
-             envio!.quienEnvia = quien; 
+             envio!.quien = quien.name;
+             envio!.quienID = quien.idCaseillero;
+             envio!.quienAliado = quien.quien.name; 
+             envio!.quienIDAliado = quien.quien.idCaseillero; 
+
              //Estado de la envio
              envio!.state = true;   
                const result = await this.add(this.collection, envio || {}, 'envio');

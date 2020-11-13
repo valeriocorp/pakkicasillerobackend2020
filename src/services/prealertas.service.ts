@@ -6,6 +6,7 @@ const trmcol = require('trmcol');
 import ResolversOperationsService from './resolvers-operations.services';
 import MailService from './mail.service';
 class PrealertaService extends ResolversOperationsService {
+    //TODO: cuando se le cambia de estado a la prealerta queda como inactiva
     trmdia:string = '';
     collection = COLLECTIONS.PREALERTAS;
     constructor(root: object, variables: object, context: IContextData) {

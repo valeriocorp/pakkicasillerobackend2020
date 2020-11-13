@@ -63,6 +63,16 @@ type Mutation {
         "especificar la procedencia de la peticion"
         admin: Boolean = false
         ): ResultEnvio         
-
+     addCalculadora(calculadora: CalculadoraInput!): ResultCalculadora
+     updateCalculadora(calculadora: CalculadoraInput!): ResultCalculadora
+     deleteCalculadora(id: ID!): ResultCalculadora
+     blockCalculadora(
+        "ID unico del usuario que queremos bloquear"
+        id: ID!,
+        "Argumento para especificar si queremos bloquear o desbloquear"
+        unblock: Boolean = false,
+        "especificar la procedencia de la peticion"
+        admin: Boolean = false
+        ): ResultCalculadora 
     
 }

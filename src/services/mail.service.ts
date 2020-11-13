@@ -5,7 +5,7 @@ class MailService {
     send(mail:IMailOptions){
         return new Promise((resolve, reject)=> {
             transport.sendMail({
-               from: '"Tu casillero Pakki 👻" <valeriocompras@gmail.com>', // sender address
+               from: '"Tu casillero Pakki 📦" <casilleropakkico@gmail.com>', // sender address
                to: mail.to, // list of receivers
                subject: mail.subject, // Subject line
               // text: 'Hello world?', // plain text body

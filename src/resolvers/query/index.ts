@@ -6,6 +6,8 @@ import resolversTagQuery from './tag';
 import resolversCotizacionQuery from './cotizacion';
 import resolversEnvioQuery from './envio';
 import resolversPrealertaQuery from './prealerta';
+import resolversTrmQuery from './trm';
+import resolversCalculadoraQuery from './calculadora';
 
 const queryResolvers = GMR.merge([
     resolversUserQuerry,
@@ -14,7 +16,9 @@ const queryResolvers = GMR.merge([
     resolversTagQuery,
     resolversCotizacionQuery,
     resolversEnvioQuery,
-    resolversPrealertaQuery
+    resolversPrealertaQuery,
+    resolversTrmQuery,
+    resolversCalculadoraQuery
 ]);
 
 export default queryResolvers;

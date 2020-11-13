@@ -4,10 +4,11 @@ import { IContextData } from '../interfaces/context-data.interface';
 import slugify from 'slugify';
 const trmcol = require('trmcol');
 import ResolversOperationsService from './resolvers-operations.services';
-class CotizacionService extends ResolversOperationsService {
+import { ICalculadora } from '../interfaces/calculadora.interface';
+class CalculadoraService extends ResolversOperationsService {
     trmdia:string = '';
     
-    collection = COLLECTIONS.COTIZACION;
+    collection = COLLECTIONS.CALCULADORA;
     constructor(root: object, variables: object, context: IContextData) {
         super(root, variables, context);
     }
@@ -100,59 +101,145 @@ class CotizacionService extends ResolversOperationsService {
         };
     }
     async details() {
-        const result = await this.get(this.collection);
-        return { status: result.status, message: result.message, tag: result.item };
+        const result = await this.getCalculadora(this.collection);
+        const calculadoraDeterminados: ICalculadora = result.item;
+        const calculadoraValores = this.getVariables().calculadora;
+        if (calculadoraValores?.cantidad) {
+            calculadoraValores.valorSeguro = 0;
+            calculadoraValores.fleteNacional = 0;
+            calculadoraValores.valorComision = 0;
+            //leydolar
+            if (calculadoraValores.valor < calculadoraDeterminados.leyDolar) {
+              //flete variable
+              calculadoraValores.flete = calculadoraDeterminados.fleteVariable;
+              calculadoraValores.iva = 0;
+              calculadoraValores.arancel = 0;
+            }
+            if (calculadoraValores.valor >= calculadoraDeterminados.leyDolar) {
+              //iva
+              calculadoraValores.iva = calculadoraDeterminados.iva/100;
+              calculadoraValores.iva = calculadoraValores.valor * calculadoraValores.iva;
+              //arancel
+              calculadoraValores.arancel = calculadoraValores.valor * calculadoraDeterminados.arancel;
+              calculadoraValores.flete = calculadoraDeterminados.fleteVariable;
+            }
+            //Si es con compra 
+            if (calculadoraValores.compramos) {
+              //valorComision
+              calculadoraValores.valorComision = calculadoraDeterminados.valorComision / 100;
+              calculadoraValores.valorComision = calculadoraValores.valor * calculadoraValores.valorComision;
+            }
+            //condicionMinimoComision
+            if (calculadoraValores.valorComision < calculadoraDeterminados.condicionMinimoComision ) {
+              //minimoValorComision
+              calculadoraValores.valorComision = calculadoraDeterminados.minimoValorComision;
+            }
+            if (calculadoraValores.nacional) {
+              //fleteNacional
+              if (calculadoraValores.valor < calculadoraDeterminados.fleteNacional) {
+                //valorFleteNacional --- seguroFleteNacional
+                calculadoraValores.fleteNacional = calculadoraDeterminados.seguroFleteNacional / 1000;
+                let sumaNacional = calculadoraValores.fleteNacional * calculadoraValores.valor; 
+                calculadoraValores.fleteNacional = sumaNacional + calculadoraDeterminados.valorFleteNacional;
+              }
+              if (calculadoraValores.valor >= calculadoraDeterminados.fleteNacional) {
+                calculadoraValores.fleteNacional = calculadoraDeterminados.seguroFleteNacional / 1000;
+                let sumaNacional = calculadoraValores.fleteNacional * calculadoraValores.valor; 
+                calculadoraValores.fleteNacional = sumaNacional + calculadoraDeterminados.valorFleteNacional;
+
+
+              }
+         //     this.calculadora.total = this.calculadora.flete * this.calculadora.cantidad + this.valorNacional;
+            }
+            if (calculadoraValores.seguro) {
+              //BaseSeguro
+              calculadoraValores.valorSeguro = calculadoraValores.valor / calculadoraDeterminados.BaseSeguro;
+              //valorSeguro
+              calculadoraValores.valorSeguro = calculadoraValores.valorSeguro * calculadoraDeterminados.valorSeguro;
+         }
+         let impuestos = calculadoraValores.iva + calculadoraValores.arancel;
+            console.log('Impuestos: ' + impuestos * calculadoraValores.cantidadArticulo);
+            console.log('flete: ' + calculadoraValores.flete * calculadoraValores.cantidadArticulo);
+            console.log('Cantidad: ' + calculadoraValores.cantidadArticulo) ;
+            console.log('Seguro: ' + calculadoraValores.valorSeguro *  calculadoraValores.cantidadArticulo);
+            console.log('Nacional: ' + calculadoraValores.fleteNacional *  calculadoraValores.cantidadArticulo);
+            console.log('comision: ' + calculadoraValores.valorComision *  calculadoraValores.cantidadArticulo);
+      
+            calculadoraValores.total = calculadoraValores.flete + calculadoraValores.valorSeguro + calculadoraValores.fleteNacional + calculadoraValores.valorComision;
+            calculadoraValores.total = calculadoraValores.total * calculadoraValores.cantidadArticulo;
+            console.log('total: ' + calculadoraValores.total);
+            const calculadoraObject = {
+                iva: impuestos * calculadoraValores.cantidadArticulo,
+                peso : calculadoraValores?.peso,
+                cantidad : calculadoraValores?.cantidad,
+                valor : calculadoraValores?.valor,
+                flete : calculadoraValores.flete * calculadoraValores?.cantidadArticulo,
+                total : calculadoraValores.total,
+                cantidadArticulo : calculadoraValores?.cantidadArticulo,
+                valorLibra : calculadoraDeterminados.valorLibra,
+                leyDolar : calculadoraDeterminados?.leyDolar,
+                reglaLibra : calculadoraDeterminados.reglaLibra,
+                compramos : calculadoraValores.compramos,
+                valorComision: calculadoraValores.valorComision *  calculadoraValores.cantidadArticulo,
+                fleteVariable : calculadoraDeterminados?.fleteVariable,
+                maxValor :calculadoraDeterminados.maxValor,
+                maxPeso : calculadoraDeterminados.maxPeso,
+                arancel: calculadoraDeterminados?.arancel,
+                minimoValorComision : calculadoraDeterminados?.minimoValorComision,
+                condicionMinimoComision :  calculadoraDeterminados?.condicionMinimoComision,
+                nacional : calculadoraValores.nacional,
+                fleteNacional : calculadoraDeterminados.fleteNacional,
+                valorFleteNacional : calculadoraValores.fleteNacional *  calculadoraValores.cantidadArticulo,
+                seguroFleteNacional : calculadoraDeterminados.seguroFleteNacional,
+                seguro : calculadoraValores.seguro,
+                BaseSeguro : calculadoraDeterminados.BaseSeguro,
+                valorSeguro : calculadoraValores.valorSeguro *  calculadoraValores.cantidadArticulo,
+                
+            };
+                    
+        return { status: result.status, message: result.message, calculadora: calculadoraObject };
+          }
+
     }
 
     async insert() {
-        const cotizacion = this.getVariables().cotizacion;
-        console.log('cotizacion' + cotizacion);
+        const calculadora = this.getVariables().calculadora;
+        console.log('calculadora' + calculadora);
          //Comprobar que user no es null
-         if (cotizacion === null) {
+         if (calculadora === null) {
             return {
                 status: false,
-                message: 'Cotizacion no definido procura definirlo',
+                message: 'calculadora no definido procura definirlo',
                 user: null
             };
         }
         // COmprobar que no existe
-        const userCheck = await findOneElement(this.getdb(),this.collection,{idCotizacion: cotizacion?.idCotizacion});
+        const userCheck = await findOneElement(this.getdb(),this.collection,{id: calculadora?.id});
         if (userCheck !== null) {
             return {
                 status: false,
-                message: `La cotiacion ${cotizacion?.idCotizacion} ya existe`,
+                message: `La calculadora ${calculadora?.id} ya existe`,
                 user: null
             };
         }   
         // Si valida las opciones anteriores, venir aquí y crear el documento
               //Comprobar el ultimo usuario registrado para asignar ID
-              cotizacion!.id = await asignDocumentId(this.getdb(),this.collection, {creationDate: -1});                
-               //crear el id de la cotizacion del casillero
-               let consecutivo = 1000 + parseInt(cotizacion!.id, 10);
-               cotizacion!.idCotizacion = 'PKCOTCO'+ consecutivo;
-               //crear la fecha de creacion de la cotizacion
-               cotizacion!.creationDate = new Date().toISOString();
+              calculadora!.id = await asignDocumentId(this.getdb(),this.collection, {creationDate: -1});                
+
                //buscar la trm del dia
-               await trmcol.query(cotizacion!.creationDate)
+               let trmDia = '';
+               await trmcol.query(new Date().toISOString())
                .then((trm: any) => {
-                   cotizacion!.trm = trm.value;
+                   trmDia = trm.value;
                })
                .catch((err: any) => console.log(err));
-               let trmNumber = parseInt(cotizacion!.trm, 10);
-               let totalnumber = parseInt(cotizacion!.totalDOL, 10);
-               let trmCol = trmNumber * totalnumber;
-            //almacenar el dinero en colombianos
-               cotizacion!.totalCOl = trmCol.toString();
-             //buscar quien hizo la cotizacion
-             const filter = {id: cotizacion?.usuarioCotiza};
-             const quien = await this.who(COLLECTIONS.USERS,filter);
-                cotizacion!.quienCotiza = quien; 
-               const result = await this.add(this.collection, cotizacion || {}, 'cotizacion');
+ 
+               const result = await this.add(this.collection, calculadora || {}, 'calculadora');
                //Guardar el documento registro en la coleccion
                return {
                    status: result.status,
                    message: result.message,
-                   cotizacion: result.item
+                   calculadora: result.item
                };
       
     }
@@ -220,4 +307,4 @@ class CotizacionService extends ResolversOperationsService {
     
 }
 
-export default CotizacionService;
+export default CalculadoraService;

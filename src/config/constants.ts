@@ -15,7 +15,10 @@ export enum COLLECTIONS {
     PREALERTAS = 'prealerta',
     ENVIO = 'envio',
     GENRES = 'genres',
-    TAGS = 'tags'
+    TAGS = 'tags',
+    TRM = 'trm',
+    CALCULADORA = 'calculadora'
+
 }
 
 

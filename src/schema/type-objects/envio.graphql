@@ -2,9 +2,7 @@
 type Envio{
     "identificador en este caso no obligatorio"
     id: ID!
-    "identificador casillero cotizacion"
-    idCotizacion: String
-      "identificador casillero prealerta"
+      "identificador quien prealerta"
     idprealerta: String
     "identificador casillero envio"
     idEnvio: String
@@ -39,9 +37,13 @@ type Envio{
     "trm del dia"
     trm: String!
     "objeto usuario creo la cotizacion"
-    quienCotiza: User!
-    "objeto usuario creo la cotizacion"
-    quienEnvia: User!
+    quien: String!
+     "objeto usuario creo la cotizacion"
+    quienID: String!
+     "objeto usuario creo la cotizacion"
+    quienAliado: String!
+     "objeto usuario creo la cotizacion"
+    quienIDAliado: String!
     "descripcion"
     descripcion: String!
       "activo o no activo"
@@ -67,9 +69,7 @@ type Envio{
     "casillero"
     casillero: String!
     "Envio nacional"
-    nacional: String!
+    nacional: Boolean
     "Estado del traking"
     pakkiTracking: String!
-
-    
 }

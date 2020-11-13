@@ -65,4 +65,8 @@ type Query{
         itemsPage: Int = 20): ResultTag
     "Item del género seleccionado"
     tag(id: ID!): ResultTag
+    "buscar la trm del dia"
+    trm(id: ID!):ResultTrm
+    "buscar la logica de la calculadora por item"
+    calculadora(calculadora: CalculadoraInput):ResultCalculadora
 }

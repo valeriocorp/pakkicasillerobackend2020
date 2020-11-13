@@ -78,6 +78,35 @@ class ResolversOperationsService {
             };
         }
     }
+    protected async getCalculadora(collection: string){
+    
+        const collectionLabel = collection.toLowerCase();
+        try {
+            return await findOneElement(this.getdb(),collection,{id: this.variables.calculadora?.id}).then(
+                result => {
+                    if (result) {
+                        return {
+                            status: true,
+                            message: `${collectionLabel} fue cargada correctamente`,
+                            item: result
+                        };
+                    }
+                    return {
+                        status: true,
+                        message: `${collectionLabel} no aparece nada, parace que ese item no existe`,
+                        item: null
+                    };
+                }
+                
+            );
+        } catch (error) {
+            return {
+                status: false,
+                message: `error inesperado al querer cargar los detalles de ${collectionLabel}`,
+                item: null
+            };
+        }
+    }
     protected async who(collection: string, filter: object){
     
         const collectionLabel = collection.toLowerCase();

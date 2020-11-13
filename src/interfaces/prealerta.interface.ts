@@ -31,4 +31,5 @@ export interface IPrealertas{
     state: boolean;
     usuarioPrealerta: string;
     quienPrealerta: IUser;
+    nacional: boolean;
 }

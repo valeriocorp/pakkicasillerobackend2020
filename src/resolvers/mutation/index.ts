@@ -6,6 +6,7 @@ import resolversEmailMutation from './email';
 import resolversCotizacionesMutation from './cotizacion';
 import resolversEnvioMutation from './envio';
 import resolversPrealertaMutation from './prealerta';
+import resolversCalculadoraMutation from './calculadora';
 const mutationResolvers = GMR.merge([
     resolversUserMutation,
     resolversGenreMutation,
@@ -13,7 +14,8 @@ const mutationResolvers = GMR.merge([
     resolversEmailMutation,
     resolversCotizacionesMutation,
     resolversEnvioMutation,
-    resolversPrealertaMutation
+    resolversPrealertaMutation,
+    resolversCalculadoraMutation
 ]);
 
 export default mutationResolvers;

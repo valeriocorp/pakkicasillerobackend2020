@@ -138,7 +138,7 @@ class UsersService extends ResolversOperationsService{
             user!.password = bcrypt.hashSync(user!.password, 10);
             //Creando el id del casillero
             let consecutivo = 1000 + parseInt(user.id, 10);
-            user!.idCaseillero = 'PAKKICO' + new Date().getFullYear().toString() + consecutivo;
+            user!.idCaseillero = 'PAKKI'  + consecutivo;
             //asociacion de un aliado
             if (user?.aliado === null || user?.aliado === undefined || user?.aliado === '') {
                 user!.aliado = '5';
@@ -147,17 +147,28 @@ class UsersService extends ResolversOperationsService{
                   const filter = {id: user?.aliado};
                   const quien = await this.who(COLLECTIONS.USERS,filter);
                      user!.quien = quien; 
-            const email = user!.email;          
+            const email = user!.email;        
             const result = await this.add(this.collection, user || {}, 'usuario');
-            const html = `Hola Bienvenido a tu casillero virtual Pakki para acceder a tu cuenta usa tu correo ${user!.email}
-             y la contraseña que le diste a la misma. `;
+            //TODO: remplazar la direccion por la variable de la direccion del casillero
+            //TODO: enviar un correo al admin indicando los datos del usuario que se acaba de registar
+            const html = `<img src="https://www.yotraigo.com/wp-content/uploads/2019/04/logo-pakki-transp.mapa_-1.png"> <br><br>
+                         Hola ${user!.name}, bienvenido a tu casillero virtual Pakki.co <br><br>
+                         Para acceder a tu cuenta usa tu correo ${user!.email} <br><br>
+                         Tu <strong>dirección del casillero</strong> para enviar compras es: <br><br>
+                         Nombre: ${user!.name} ${user!.lastname} ${user!.idCaseillero}<br>
+                         Dirección: 8130 NW 71st ST<br>
+                         Ciudad y estado: Miami, FL <br>
+                         Código postal: 33166<br>
+                         Teléfono: 786 4084743 <br><br>   
+                         Te invitamos a completar tu perfil ingresando a tu casillero: <a href="${process.env.CLIENT_URL}".<br><br>
+                         Equipo Pakki `;
             const mail = {
                 subject: 'Bienvenido a tu casillero virtual',
                 to: email,
                 html
             };
             //Envia correo al usuario de bienvenida
-            new MailService().send(mail)
+            new MailService().send(mail);
             //Guardar el documento registro en la coleccion
             return {
                 status: result.status,

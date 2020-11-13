@@ -19,7 +19,6 @@ export interface IEnvio{
     impuesto: string;
     url: string;
     trm: string;
-    quienCotiza: IUser;
     descripcion: string;
     active: boolean;
     tienda: string;
@@ -32,8 +31,11 @@ export interface IEnvio{
     direccion: string;
     pago: string;
     casillero: string;
-    nacional: string;
+    nacional: boolean;
     pakkiTracking: string;
     idEnvio: string;
-    quienEnvia: IUser;
+    quien: string;
+    quienID: string;
+    quienAliado: string;
+    quienIDAliado: string;
 }

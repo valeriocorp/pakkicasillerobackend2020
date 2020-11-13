@@ -1,0 +1,53 @@
+input CalculadoraInput {
+    id: ID
+    "las libras que pesa el articulo"
+    peso: Float
+    "si se va a calcular por cantidad o no"
+    cantidad: Boolean
+    "valor total del articulo"
+    valor: Float
+    "flete del articulo"
+    flete: Float
+    "iva del articulo"
+    iva: Float
+    "el total de la sumatoria del articulo"
+    total: Float
+    "la cantidad de articulos si aplica"
+    cantidadArticulo: Float
+    "el valor por cada libra"
+    valorLibra: Float
+    "el valor que se usa para calcular si se cobran arancel he iva"
+    leyDolar: Float
+    "el valor que se usa para saber si se cobra menos flete o mas"
+    reglaLibra:Float
+    "compramos por ti ?"
+    compramos: Boolean
+    "valor por compra comision"
+    valorComision: Float
+    "valor del flete dependiendo del tipo de articulo"
+    fleteVariable: Float
+    "valor maximo del articulo 2000 dolares"
+    maxValor: Float
+    "peso maximo 150 lb"
+    maxPeso: Float
+    "arancel"
+    arancel: Float
+    "El minimo de comosion por una compra"
+    minimoValorComision: Float
+    "el codicion minima del valor del articulo"
+    condicionMinimoComision: Float
+    "envio nacional"
+    nacional: Boolean
+    "valor que se usa si se va a cobrar envio nacional"
+    fleteNacional: Float
+    "este es el valor del flete nacional"
+    valorFleteNacional: Float
+    "seguro flete nacional"
+    seguroFleteNacional: Float
+    "lleva seguro"
+    seguro: Boolean
+    "la base por la cual se divide el valor total"
+    BaseSeguro: Float
+    "el valor a cobrar por el seguro"
+    valorSeguro: Float
+}

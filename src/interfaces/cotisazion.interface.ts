@@ -18,4 +18,5 @@ export interface ICotizacion{
     impuesto: string;
     url: string;
     trm: string;
+    nacional: boolean;
 }

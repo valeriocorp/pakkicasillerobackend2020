@@ -2,9 +2,7 @@
 input EnvioInput{
     "identificador en este caso no obligatorio"
     id: ID
-    "identificador casillero"
-    idCotizacion: String
-         "identificador casillero prealerta"
+  "identificador quien prealerta"
     idprealerta: String!
     "identificador casillero envio"
     idEnvio: String
@@ -12,7 +10,7 @@ input EnvioInput{
     peso: String
     "cantidad unitaria"
     cantidad: String
-    "precio en dolar"
+    "valor en dolar"
     precio: String
     "tipo articulo"
     tipoProducto:String
@@ -55,7 +53,7 @@ input EnvioInput{
     "casillero"
     casillero: String
     "Envio nacional"
-    nacional: String
+    nacional: Boolean
     "Estado del traking"
     pakkiTracking: String!
 

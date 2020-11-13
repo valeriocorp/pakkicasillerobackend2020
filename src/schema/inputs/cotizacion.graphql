@@ -32,4 +32,6 @@ input CotizacionInput {
     descripcion: String
       "activo o no activo"
     active: Boolean
+    "envio nacional"
+    nacional: Boolean
 }

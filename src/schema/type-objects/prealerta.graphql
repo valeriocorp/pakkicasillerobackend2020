@@ -60,6 +60,8 @@ type Prealerta{
     productQty: String!
     "Estado para cambiar a ser envios"
     state: Boolean!
+    "envio nacional"
+    nacional: Boolean
 
     
 }

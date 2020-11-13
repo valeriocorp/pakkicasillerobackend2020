@@ -38,9 +38,9 @@ type Cotizacion{
     quienCotiza: User!
     "descripcion"
     descripcion: String!
-      "activo o no activo"
+    "activo o no activo"
     active: Boolean
-
-    
+    "envio nacional"
+     nacional: Boolean
 }
 
